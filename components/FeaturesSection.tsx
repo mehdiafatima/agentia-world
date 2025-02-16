@@ -52,27 +52,29 @@ export default function FeaturesSection() {
       {/* Cards Container */}
       <div className="mt-12 flex flex-wrap justify-center gap-6 px-6">
         {cards.map((card, index) => (
-          <motion.div
-            key={index}
-            whileHover={{
-              borderColor: "#D1D5DB", // Light gray border on hover
-              scale: 1.05, // Slight lift effect
-            }}
-            transition={{ type: "spring", stiffness: 200, damping: 10 }}
-            className={`relative bg-[#111] border border-gray-800 p-6 rounded-xl shadow-lg w-64 
-              flex flex-col items-start text-left transition-all duration-300 ${
-                index === highlightedIndex ? "shadow-[0_0_15px_#6B21A8]" : ""
-              }`}
-          >
-            {/* Icon at the Top */}
-            <div className="bg-gradient-to-r from-purple-600 to-blue-500 p-2 rounded-lg shadow-md mb-4">
-              {card.icon}
-            </div>
+  <motion.div
+  key={index}
+  animate={{
+    scale: index === highlightedIndex ? 1.1 : 1, // Highlighted item zoom hoga
+    boxShadow: index === highlightedIndex ? "0px 0px 20px rgba(107, 33, 168, 0.8)" : "none"
+  }}
+  whileHover={{
+    borderColor: "#D1D5DB",
+    scale: 1.05,
+  }}
+  whileTap={{
+    scale: 0.95,
+  }}
+  transition={{ type: "spring", stiffness: 200, damping: 10 }}
+  className="relative bg-[#111] border border-gray-800 p-6 rounded-xl shadow-lg w-64 flex flex-col items-start text-left transition-all duration-300"
+>
+  <div className="bg-gradient-to-r from-purple-600 to-blue-500 p-2 rounded-lg shadow-md mb-4">
+    {card.icon}
+  </div>
+  <h3 className="text-xl font-semibold">{card.title}</h3>
+  <p className="text-gray-400 text-sm mt-2">{card.desc}</p>
+</motion.div>
 
-            {/* Text Content */}
-            <h3 className="text-xl font-semibold">{card.title}</h3>
-            <p className="text-gray-400 text-sm mt-2">{card.desc}</p>
-          </motion.div>
         ))}
       </div>
     </section>
