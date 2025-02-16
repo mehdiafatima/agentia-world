@@ -29,25 +29,25 @@ export default function FeaturesSection() {
   ];
 
   const [highlightedIndex, setHighlightedIndex] = useState(0);
-  const [isUserTapped, setIsUserTapped] = useState(false); // Track if user has tapped
+  const [isMobile, setIsMobile] = useState(false);
 
+  // Detect if user is on mobile
   useEffect(() => {
-    let interval: NodeJS.Timeout;
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
-    if (!isUserTapped) {
-      interval = setInterval(() => {
+  // Auto-scroll for desktop only
+  useEffect(() => {
+    if (!isMobile) {
+      const interval = setInterval(() => {
         setHighlightedIndex((prev) => (prev + 1) % cards.length);
       }, 2000);
-    } else {
-      // Reset auto-scroll after 5 sec if no tap happens
-      const resetTimer = setTimeout(() => {
-        setIsUserTapped(false);
-      }, 5000);
-      return () => clearTimeout(resetTimer);
+      return () => clearInterval(interval);
     }
-
-    return () => clearInterval(interval);
-  }, [isUserTapped]);
+  }, [isMobile]);
 
   return (
     <section className="bg-black text-white py-20">
@@ -66,18 +66,8 @@ export default function FeaturesSection() {
         {cards.map((card, index) => (
           <motion.div
             key={index}
-            onClick={() => {
-              setHighlightedIndex(index);
-              setIsUserTapped(true);
-            }}
-            whileHover={{
-              borderColor: "#D1D5DB",
-              scale: 1.05,
-            }}
-            whileTap={{
-              scale: 0.95,
-              borderColor: "#6B21A8",
-            }}
+            onClick={() => setHighlightedIndex(index)}
+            whileHover={!isMobile ? { scale: 1.05, borderColor: "#D1D5DB" } : {}}
             transition={{ type: "spring", stiffness: 200, damping: 10 }}
             className={`relative bg-[#111] border border-gray-800 p-6 rounded-xl shadow-lg w-64 
               flex flex-col items-start text-left transition-all duration-300 ${
