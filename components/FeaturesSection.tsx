@@ -29,25 +29,14 @@ export default function FeaturesSection() {
   ];
 
   const [highlightedIndex, setHighlightedIndex] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
 
-  // Detect if user is on mobile
+  // Auto-scroll feature (runs on all devices)
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+    const interval = setInterval(() => {
+      setHighlightedIndex((prev) => (prev + 1) % cards.length);
+    }, 2000);
+    return () => clearInterval(interval);
   }, []);
-
-  // Auto-scroll for desktop only
-  useEffect(() => {
-    if (!isMobile) {
-      const interval = setInterval(() => {
-        setHighlightedIndex((prev) => (prev + 1) % cards.length);
-      }, 2000);
-      return () => clearInterval(interval);
-    }
-  }, [isMobile]);
 
   return (
     <section className="bg-black text-white py-20">
@@ -67,7 +56,8 @@ export default function FeaturesSection() {
           <motion.div
             key={index}
             onClick={() => setHighlightedIndex(index)}
-            whileHover={!isMobile ? { scale: 1.05, borderColor: "#D1D5DB" } : {}}
+            whileHover={{ scale: 1.05, borderColor: "#D1D5DB" }}
+            whileTap={{ scale: 1.1, borderColor: "#D1D5DB" }}
             transition={{ type: "spring", stiffness: 200, damping: 10 }}
             className={`relative bg-[#111] border border-gray-800 p-6 rounded-xl shadow-lg w-64 
               flex flex-col items-start text-left transition-all duration-300 ${
