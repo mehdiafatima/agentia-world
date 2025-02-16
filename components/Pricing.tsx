@@ -1,11 +1,16 @@
 "use client";
+import { useState } from "react";
 import { motion } from "framer-motion";
 
 const Pricing = () => {
+  const [tappedIndex, setTappedIndex] = useState<number | null>(null);
+
   return (
     <section className="bg-black text-white py-20 px-6 flex flex-col items-center">
       {/* Heading */}
-      <h2 className="text-5xl text-center font-bold bg-gradient-to-r from-pink-300 to-blue-500 text-transparent bg-clip-text">Choose Your Plan</h2>
+      <h2 className="text-5xl text-center font-bold bg-gradient-to-r from-pink-300 to-blue-500 text-transparent bg-clip-text">
+        Choose Your Plan
+      </h2>
       <p className="text-gray-400 mt-2">
         Scale your AI capabilities with our flexible pricing
       </p>
@@ -55,7 +60,12 @@ const Pricing = () => {
           <motion.div
             key={index}
             whileHover={{ scale: 1.05, borderColor: "#6D28D9" }}
-            className={`p-6 rounded-xl w-80 shadow-lg transition-all border border-gray-800 ${
+            onClick={() => setTappedIndex(index === tappedIndex ? null : index)} // Toggle effect on tap
+            animate={{
+              scale: tappedIndex === index ? 1.05 : 1, // Animate scale on tap
+              borderColor: tappedIndex === index ? "#6D28D9" : "#374151",
+            }}
+            className={`p-6 rounded-xl w-80 shadow-lg transition-all border border-gray-800 cursor-pointer ${
               plan.title === "Professional"
                 ? "bg-gradient-to-b from-[#1E073E] to-[#0A021A] border-purple-500"
                 : "bg-[#111]"
