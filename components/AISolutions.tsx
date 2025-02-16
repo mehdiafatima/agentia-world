@@ -25,7 +25,7 @@ export default function AISolutions() {
   return (
     <section className="bg-black text-white py-20 px-6 w-100% ">
       <div className="text-center">
-        <h2 className="text-5xl font-bold bg-gradient-to-r from-purple-400 to-blue-500 text-transparent bg-clip-text">
+        <h2 className="text-5xl font-bold bg-gradient-to-r from-pink-300 to-blue-500 text-transparent bg-clip-text">
           AI Solutions
         </h2>
         <p className="text-gray-400 mt-2 text-lg">

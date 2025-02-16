@@ -4,7 +4,7 @@ export default function ContactForm() {
   return (
     <div className="min-h-screen bg-black flex items-center justify-center p-6">
       <div className="max-w-4xl w-full">
-        <h2 className="text-center text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-500">
+        <h2 className="text-center text-5xl font-bold bg-gradient-to-r from-pink-300 to-blue-500 text-transparent bg-clip-text">
           Get in Touch
         </h2>
         <p className="text-center text-gray-400 mt-2">

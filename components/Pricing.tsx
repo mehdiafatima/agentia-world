@@ -5,7 +5,7 @@ const Pricing = () => {
   return (
     <section className="bg-black text-white py-20 px-6 flex flex-col items-center">
       {/* Heading */}
-      <h2 className="text-3xl font-bold text-purple-400">Choose Your Plan</h2>
+      <h2 className="text-5xl text-center font-bold bg-gradient-to-r from-pink-300 to-blue-500 text-transparent bg-clip-text">Choose Your Plan</h2>
       <p className="text-gray-400 mt-2">
         Scale your AI capabilities with our flexible pricing
       </p>
