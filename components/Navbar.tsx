@@ -21,7 +21,7 @@ export default function Navbar() {
       {/* Logo Section */}
       <div className="flex items-center space-x-2">
         <Bot className="w-6 h-6 text-purple-500" />
-        <span className="text-lg font-bold">Agentia World</span>
+        <Link href="/" className="text-lg font-bold">Agentia World</Link>
       </div>
 
       {/* Hamburger Button - Small Screens */}
