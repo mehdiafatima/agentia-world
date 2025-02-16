@@ -41,7 +41,7 @@ export default function FeaturesSection() {
     <section className="bg-black text-white py-20">
       {/* Heading */}
       <div className="text-center">
-        <h2 className="text-5xl item-center font-bold bg-gradient-to-r from-pink-300 to-blue-500 text-transparent bg-clip-text">
+        <h2 className="text-5xl font-bold bg-gradient-to-r from-pink-300 to-blue-500 text-transparent bg-clip-text">
           Neural Capabilities
         </h2>
         <p className="text-gray-400 mt-2 text-lg">
@@ -55,14 +55,6 @@ export default function FeaturesSection() {
           <motion.div
             key={index}
             onTouchStart={() => setHighlightedIndex(index)}
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: index * 0.1 }}
-            whileHover={{
-              scale: 1.1,
-              boxShadow: "0px 10px 20px rgba(168, 85, 247, 0.3)",
-            }}
-            whileTap={{ scale: 1.05, rotate: 1 }}
             className={`relative bg-[#111] border border-gray-800 p-6 rounded-xl shadow-lg 
               flex flex-col items-start text-left transition-all duration-300 will-change-transform
               ${
@@ -70,6 +62,14 @@ export default function FeaturesSection() {
                   ? "shadow-[0_0_20px_#6B21A8] border-[#6B21A8] scale-105"
                   : ""
               }`}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: index * 0.1 }}
+            whileHover={{
+              scale: 1.1,
+              boxShadow: "0px 10px 20px rgba(168, 85, 247, 0.3)",
+            }}
+            whileTap={{ scale: 1.05, rotate: 2 }}
           >
             {/* Animated Icon */}
             <motion.div
