@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+
 import { motion } from "framer-motion";
 import { Brain, MessageSquare, Terminal, Shield } from "lucide-react";
 
@@ -28,15 +28,6 @@ export default function FeaturesSection() {
     },
   ];
 
-  const [highlightedIndex, setHighlightedIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setHighlightedIndex((prev) => (prev + 1) % cards.length);
-    }, 2500);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <section className="bg-black text-white py-20">
       {/* Heading */}
@@ -54,22 +45,16 @@ export default function FeaturesSection() {
         {cards.map((card, index) => (
           <motion.div
             key={index}
-            onTouchStart={() => setHighlightedIndex(index)}
-            className={`relative bg-[#111] border border-gray-800 p-6 rounded-xl shadow-lg 
-              flex flex-col items-start text-left transition-all duration-300 will-change-transform
-              ${
-                index === highlightedIndex
-                  ? "shadow-[0_0_20px_#6B21A8] border-[#6B21A8] scale-105"
-                  : ""
-              }`}
-            initial={{ opacity: 0, y: 30 }}
+            className="relative bg-[#111] border border-gray-800 p-6 rounded-xl shadow-lg 
+              flex flex-col items-start text-left transition-all duration-300 will-change-transform"
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: index * 0.1 }}
+            transition={{ duration: 0.5, delay: index * 0.3, ease: "easeOut" }}
             whileHover={{
-              scale: 1.1,
+              scale: 1.05,
               boxShadow: "0px 10px 20px rgba(168, 85, 247, 0.3)",
             }}
-            whileTap={{ scale: 1.05, rotate: 2 }}
+            whileTap={{ scale: 1.02, rotate: 1 }}
           >
             {/* Animated Icon */}
             <motion.div
