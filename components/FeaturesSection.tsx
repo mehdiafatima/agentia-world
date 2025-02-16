@@ -29,13 +29,18 @@ export default function FeaturesSection() {
   ];
 
   const [highlightedIndex, setHighlightedIndex] = useState(0);
+  const [isUserTapped, setIsUserTapped] = useState(false); // Track manual tap
 
+  // Auto highlight effect every 2 seconds (disabled after tap)
   useEffect(() => {
+    if (isUserTapped) return; // Stop auto-scroll if user interacts
+
     const interval = setInterval(() => {
       setHighlightedIndex((prev) => (prev + 1) % cards.length);
     }, 2000);
+
     return () => clearInterval(interval);
-  }, []);
+  }, [isUserTapped]);
 
   return (
     <section className="bg-black text-white py-20">
@@ -52,32 +57,35 @@ export default function FeaturesSection() {
       {/* Cards Container */}
       <div className="mt-12 flex flex-wrap justify-center gap-6 px-6">
         {cards.map((card, index) => (
-            <motion.div
-  key={index}
-  whileHover={{
-    borderColor: "#D1D5DB", // Light gray border on hover
-    scale: 1.05, // Slight lift effect
-  }}
-  whileTap={{
-    scale: 0.95, // Thoda press effect
-  }}
-  transition={{ type: "spring", stiffness: 200, damping: 10 }}
-  className={`relative bg-[#111] border border-gray-800 p-6 rounded-xl shadow-lg w-64 
-    flex flex-col items-start text-left transition-all duration-300 ${
-      index === highlightedIndex ? "shadow-[0_0_15px_#6B21A8]" : ""
-    }`}
->
-  {/* Icon at the Top */}
-  <div className="bg-gradient-to-r from-purple-600 to-blue-500 p-2 rounded-lg shadow-md mb-4">
-    {card.icon}
-  </div>
+          <motion.div
+            key={index}
+            onClick={() => {
+              setHighlightedIndex(index);
+              setIsUserTapped(true); // Stop auto-scroll after tap
+            }}
+            whileHover={{
+              borderColor: "#D1D5DB", // Light gray border on hover
+              scale: 1.05, // Slight lift effect
+            }}
+            whileTap={{
+              scale: 0.95, // Press effect
+              borderColor: "#6B21A8",
+            }}
+            transition={{ type: "spring", stiffness: 200, damping: 10 }}
+            className={`relative bg-[#111] border border-gray-800 p-6 rounded-xl shadow-lg w-64 
+              flex flex-col items-start text-left transition-all duration-300 ${
+                index === highlightedIndex ? "shadow-[0_0_15px_#6B21A8] border-[#6B21A8]" : ""
+              }`}
+          >
+            {/* Icon at the Top */}
+            <div className="bg-gradient-to-r from-purple-600 to-blue-500 p-2 rounded-lg shadow-md mb-4">
+              {card.icon}
+            </div>
 
-  {/* Text Content */}
-  <h3 className="text-xl font-semibold">{card.title}</h3>
-  <p className="text-gray-400 text-sm mt-2">{card.desc}</p>
-</motion.div>
-
-
+            {/* Text Content */}
+            <h3 className="text-xl font-semibold">{card.title}</h3>
+            <p className="text-gray-400 text-sm mt-2">{card.desc}</p>
+          </motion.div>
         ))}
       </div>
     </section>
