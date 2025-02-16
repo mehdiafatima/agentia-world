@@ -29,15 +29,22 @@ export default function FeaturesSection() {
   ];
 
   const [highlightedIndex, setHighlightedIndex] = useState(0);
-  const [isUserTapped, setIsUserTapped] = useState(false); // Track manual tap
+  const [isUserTapped, setIsUserTapped] = useState(false); // Track if user has tapped
 
-  // Auto highlight effect every 2 seconds (disabled after tap)
   useEffect(() => {
-    if (isUserTapped) return; // Stop auto-scroll if user interacts
+    let interval: NodeJS.Timeout;
 
-    const interval = setInterval(() => {
-      setHighlightedIndex((prev) => (prev + 1) % cards.length);
-    }, 2000);
+    if (!isUserTapped) {
+      interval = setInterval(() => {
+        setHighlightedIndex((prev) => (prev + 1) % cards.length);
+      }, 2000);
+    } else {
+      // Reset auto-scroll after 5 sec if no tap happens
+      const resetTimer = setTimeout(() => {
+        setIsUserTapped(false);
+      }, 5000);
+      return () => clearTimeout(resetTimer);
+    }
 
     return () => clearInterval(interval);
   }, [isUserTapped]);
@@ -61,14 +68,14 @@ export default function FeaturesSection() {
             key={index}
             onClick={() => {
               setHighlightedIndex(index);
-              setIsUserTapped(true); // Stop auto-scroll after tap
+              setIsUserTapped(true);
             }}
             whileHover={{
-              borderColor: "#D1D5DB", // Light gray border on hover
-              scale: 1.05, // Slight lift effect
+              borderColor: "#D1D5DB",
+              scale: 1.05,
             }}
             whileTap={{
-              scale: 0.95, // Press effect
+              scale: 0.95,
               borderColor: "#6B21A8",
             }}
             transition={{ type: "spring", stiffness: 200, damping: 10 }}
