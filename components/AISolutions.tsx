@@ -25,6 +25,18 @@ export default function AISolutions() {
 
   // State to track which card is highlighted
   const [highlightedIndex, setHighlightedIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect screen size
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
 
   // Auto highlight effect every 2 seconds
   useEffect(() => {
@@ -36,7 +48,7 @@ export default function AISolutions() {
   }, []);
 
   return (
-    <section className="bg-black text-white py-20 px-6 w-100%">
+    <section className="bg-black text-white py-20 px-6 w-full">
       <div className="text-center">
         <h2 className="text-5xl font-bold bg-gradient-to-r from-pink-300 to-blue-500 text-transparent bg-clip-text">
           AI Solutions
@@ -50,15 +62,16 @@ export default function AISolutions() {
         {solutions.map((solution, index) => (
           <motion.div
             key={index}
-            whileHover={{ borderColor: "#444", scale: 1.05 }} // Hover effect for desktop
-            whileTap={{ scale: 0.95, borderColor: "#6B21A8" }} // Tap effect for mobile
+            whileHover={!isMobile ? { borderColor: "#444", scale: 1.05 } : {}} // Hover effect only for desktop
+            whileTap={isMobile ? { scale: 0.95, borderColor: "#6B21A8" } : {}} // Tap effect only for mobile
             transition={{ duration: 0.3 }}
-            className={`bg-[#111] border border-transparent p-6 rounded-xl shadow-lg w-72 flex flex-col items-start text-left transition-all
+            className={`bg-[#111] border border-transparent p-6 rounded-xl shadow-lg w-72 flex flex-col items-start text-left transition-all 
               ${
                 index === highlightedIndex
-                  ? "shadow-[0_0_15px_#6B21A8] border-[#6B21A8]" // Highlight effect on mobile
+                  ? "shadow-[0_0_15px_#6B21A8] border-[#6B21A8]" // Highlight effect for mobile
                   : ""
               }`}
+            onClick={() => setHighlightedIndex(index)} // Mobile click highlight
           >
             <div className="bg-gradient-to-r from-purple-600 to-blue-500 p-2 rounded-lg shadow-md mb-4">
               {solution.icon}
